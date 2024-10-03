@@ -2,13 +2,13 @@
 import '@testing-library/jest-dom';
 
 // Mock matchMedia for tests
-window.matchMedia = jest.fn().mockImplementation(query => ({
-  matches: false,
-  media: query,
-  onchange: null,
-  addListener: jest.fn(), // Deprecated
-  removeListener: jest.fn(), // Deprecated
-  addEventListener: jest.fn(), // New way to add listeners
-  removeEventListener: jest.fn(), // New way to remove listeners
-  dispatchEvent: jest.fn(),
-}));
+// https://github.com/akiran/react-slick/blob/bae881766024deeccab7d67ddf5d1a323f9355c8/test-setup.js#L4-L13
+window.matchMedia =
+  window.matchMedia ||
+  function() {
+    return {
+      matches: false,
+      addListener: function() {},
+      removeListener: function() {}
+    };
+  };
